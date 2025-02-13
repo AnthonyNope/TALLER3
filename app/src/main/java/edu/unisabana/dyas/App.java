@@ -5,7 +5,7 @@ package edu.unisabana.dyas;
 
 public class App {
     public String getGreeting() {
-        return "Hello World!";
+        return "Qhubo parcero";
     }
 
     public static void main(String[] args) {

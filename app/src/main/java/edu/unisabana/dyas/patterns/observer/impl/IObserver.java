@@ -6,5 +6,5 @@ package edu.unisabana.dyas.patterns.observer.impl;
  */
 public interface IObserver {
     
-    public void notifyObserver(String command, Object source);
+    void notifyObserver(String command, Object source);
 }

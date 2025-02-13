@@ -2,47 +2,51 @@ package edu.unisabana.dyas.patterns.observer;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Observable;
 import edu.unisabana.dyas.patterns.observer.impl.ConfigurationManager;
 import edu.unisabana.dyas.patterns.observer.impl.observers.DateFormatObserver;
 import edu.unisabana.dyas.patterns.observer.impl.observers.MoneyFormatObserver;
 
-/**
- * @author cesarvefe
- 
- */
 public class ObserverMain {
-
     public static void main(String[] args) {
         ConfigurationManager conf = ConfigurationManager.getInstance();
+
+        System.out.println("\nBuen dia");
+        System.out.println("El programa empezara a ejecutarse :D ");
         
-        //Se establecen los valores por default.
-        conf.setDefaultDateFormat(new SimpleDateFormat("yyyy/MM/dd"));
+        conf.setDefaultDateFormat(new SimpleDateFormat("Y/M/D"));
         conf.setMoneyFormat(new DecimalFormat("##.00"));
-        System.out.println("Established configuration");
-        
-        //Se dan de alta lo observers
-        DateFormatObserver dateFormatObserver = new DateFormatObserver();
-        MoneyFormatObserver moneyFormatObserver = new MoneyFormatObserver();
-        conf.addObserver(dateFormatObserver);
-        conf.addObserver(moneyFormatObserver);
-        System.out.println("");
-        
-        //Se cambia la fonfiguratión
-        conf.setDefaultDateFormat(new SimpleDateFormat("dd/MM/yyyy"));
+
+        System.out.println("\nConfiguracion inicial:");
+        System.out.println("Formato Fecha: " + conf.getDefaultDateFormat().toPattern());
+        System.out.println("Formato Dinero: " + conf.getMoneyFormat().format(1234.56));
+
+
+        System.out.println("\nAgregando a los observadores");
+        DateFormatObserver dateObserver = new DateFormatObserver();
+        MoneyFormatObserver moneyObserver = new MoneyFormatObserver();
+        conf.addObserver(dateObserver);
+        conf.addObserver(moneyObserver);
+
+       
+        System.out.println("\nConfiguracion modificada");
+        conf.setDefaultDateFormat(new SimpleDateFormat("D/M/Y"));
         conf.setMoneyFormat(new DecimalFormat("###,#00.00"));
-        System.out.println("");
+
+        System.out.println("\nNueva configuracion:");
+        System.out.println("Formato Fecha: " + conf.getDefaultDateFormat().toPattern());
+        System.out.println("Formato Dinero: " + conf.getMoneyFormat().format(1234.56));
+
         
-        //Se realiza otro cambio en la configuración.
-        conf.setDefaultDateFormat(new SimpleDateFormat("MM/yyyy/dd"));
-        conf.setMoneyFormat(new DecimalFormat("###,#00"));
+        System.out.println("\nSacando a los observadores");
+        conf.removeObserver(dateObserver);
+        conf.removeObserver(moneyObserver);
         
-        conf.removeObserver(dateFormatObserver);
-        conf.removeObserver(moneyFormatObserver);
-        System.out.println("");
         
-        //Se realiza otro cambio en la configuración.
-        conf.setDefaultDateFormat(new SimpleDateFormat("MM/yyyy"));
-        conf.setMoneyFormat(new DecimalFormat("###,##0.00"));
+        
+        System.out.println("\nEl programa a terminado");
+        System.out.println("Que tenga un excelente dia");
+
+
     }
 }
+

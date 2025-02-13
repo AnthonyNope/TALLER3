@@ -3,19 +3,15 @@ package edu.unisabana.dyas.patterns.observer.impl;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
-/**
- * @author cesarvefe
- 
- */
 public class ConfigurationManager extends AbstractObservable {
+    public static final String DATE_FORMAT_CHANGED = "defaultDateFormat";
+    public static final String MONEY_FORMAT_CHANGED = "moneyFormat";
 
     private SimpleDateFormat defaultDateFormat;
     private NumberFormat moneyFormat;
-
     private static ConfigurationManager configurationManager;
 
-    private ConfigurationManager() {
-    }
+    private ConfigurationManager() {}
 
     public static ConfigurationManager getInstance() {
         if (configurationManager == null) {
@@ -24,26 +20,21 @@ public class ConfigurationManager extends AbstractObservable {
         return configurationManager;
     }
 
+    public void setDefaultDateFormat(SimpleDateFormat defaultDateFormat) {
+        this.defaultDateFormat = defaultDateFormat;
+        notifyAllObservers(DATE_FORMAT_CHANGED, this);
+    }
+
+    public void setMoneyFormat(NumberFormat moneyFormat) {
+        this.moneyFormat = moneyFormat;
+        notifyAllObservers(MONEY_FORMAT_CHANGED, this);
+    }
+
     public SimpleDateFormat getDefaultDateFormat() {
         return defaultDateFormat;
     }
 
-    public void setDefaultDateFormat(SimpleDateFormat defaultDateFormat) {
-//        System.out.println("Date Format change > " + 
-//                (this.defaultDateFormat!=null 
-//                        ?this.defaultDateFormat.toPattern():"Null") + " to " 
-//                + defaultDateFormat.toPattern());
-        this.defaultDateFormat = defaultDateFormat;
-        notifyAllObservers("defaultDateFormat", this);
-    }
-
     public NumberFormat getMoneyFormat() {
         return moneyFormat;
-    }
-
-    public void setMoneyFormat(NumberFormat moneyFormat) {
-//        System.out.println("Date Format change > ");
-        this.moneyFormat = moneyFormat;
-        notifyAllObservers("moneyFormat", this);
     }
 }
